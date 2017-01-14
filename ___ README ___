@@ -1,0 +1,32 @@
+*** README ***
+
+Tugas Besar IF2121 - Logika Informatika
+
+         _______                                      
+        /  _____\                                     
+       /  //                                          
+       |  || ___  ______  ________  _______           
+       |  ||/__ \/  __  \/  ___  ||/ ____ ||          
+       |  ||  | || || | || ||  | || ______//          
+       |  \\__/ || ||_| || ||  | || \_____    _       
+        \_______/\______/|_||  | ||\______// /_/ 
+
+Nama file zip :  IF2121_K-02_G-01.zip
+
+Nama file : gone.pl
+
+Nama kelompok : holy(ry)Clinton (Kelas 02)
+
+Anggota kelompok :
+
+Oktavianus Handika 		13515035
+Felix Limanta 			13515065
+Rionaldi Chandraseta 		13515077
+Holy Lovenia 			13515113
+Agus Gunawan 			13515143
+
+Cara menjalankan program
+Game gone.pl dijalankan pada platform Linux.
+1. Jalankan prolog pada folder yang terdapat file "gone.pl" pada terminal dengan mengetik prolog atau gprolog pada terminal.
+2. Setelah compile program sukses, jalankan program dengan mengetik "start."
+3. Game dimulai dan selamat bermain!
