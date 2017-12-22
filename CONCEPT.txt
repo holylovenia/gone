@@ -1,0 +1,703 @@
+=== GONE. ===
+
+::NOTE
+    Any never-defined functions should print out the following:
+
+    > <COMMAND>
+        That command is not recognized.
+
+    Any defined functions should print out the same thing unless redefined later.
+
+
+========================================
+|   indicates LOCATION
+||  indicates ROOM
+//  indicates Storyline
+%   indicates Additional Note
+#   indicates Re-definition of commands
+=>  indicates GoTo Phase
+=========================================
+
+::STANDARD COMMAND
+
+> Drop <owned_object>
+    You have dropped the <object>.
+
+> Drop <unowned_object>
+    You don't have that.
+
+> Take <existing_object_in_room>
+    You have taken the <object>.
+
+> Take <non-existant_object_in_room>
+    There is no such thing here.
+
+> Take <static_object>
+    You can't take that with you.
+
+> Look
+    <Display Room Description>
+
+> Look in <non-existant_object_in_room>
+    There is no such thing here.
+
+> Look under <irrelevant_object>
+    Nothing interesting there
+
+> Inspect <existing_object_in_room>
+    <Description>
+
+> Inspect <non-existant_object_in_room>
+    There is no such thing here.
+
+> Use <invalid_object>
+    There is no point in doing that.
+
+> Drop / Take / Look in / Inspect / Look under / Use (without object)
+    You have to specify the object.
+
+> Stat
+    It is now 8:00 a.m.
+    Your body emits a particular odor.
+    Your clothes are slightly dirty and stained.
+    You are hungry.
+
+    % Stat always show different time, it moves 1 minutes per action.
+
+> Inventory
+    You are carrying:
+     * a watch
+     * clothes
+
+> n / e / w / s  <existing_room_in_that_direction>
+    You went (north / east / west / south).
+
+> n / e / w / s  <non-existing_room_in_that_direction>
+    You can't go that way.
+
+
+== INTRO
+Your slumber is yet again disturbed by the obnoxiously loud alarm clock on the dresser across the room.
+
+It was so loud this time that the urge to turn it off is far greater than your will to sleep longer. With great effort, you finally managed to open your eyes and see the plain white ceiling.
+Unable to bear the loud noise any longer, you tried to get up and fail miserably. 
+
+Your body refused to get up and fell back on the bed. The alarm clock is still ringing, loudly.
+
+========
+| HOUSE
+> Up
+    There is no second floor or basement in this house.
+
+> Down
+    There is no second floor or basement in this house.
+___________
+|| BEDROOM
+    This is the bedroom. Nobody would appreciate the absence of order in this room. A dresser is placed right across the bed, and a desk lies on one of the corner. The wooden floor goes well with the light color of the walls. Dirty clothes are scattered on the floor, unattended.
+
+    The door to the Bathroom lies to the West. Another door located on the South side leads to the Living Room.
+
+// Phase 1
+
+    > <EVERY COMMAND> (except Look, Inventory, and Stat)
+        You have to get up first.
+
+    > Turn off (Alarm)
+        You can't possibly reach the alarm across the room from the bed. You have to get up first.
+
+    > Get up
+        You pulled yourself together and managed to stand on your feet.
+        => Phase 2
+        
+        #   > Get up
+                You are already up.
+
+    > Sleep
+        Are you sure it's a good idea to go back go sleep?
+        That was a rhetorical question.
+
+
+// Phase 2
+
+    > Turn off (Alarm)
+        You walked closer to the source of the sound and immediately switched it off. You saw a sticky note on stuck on the alarm.
+
+        #   > Turn on (Alarm)
+                Really? Your eardrums are bursting as it is.
+
+            > Turn off (Alarm)
+                It's already off. You still wondered how this little thing could produce such a loud noise.
+
+
+    > Inspect (Alarm)
+        You walked closer to the source of the sound. You saw a sticky note stuck on the alarm.
+
+    > Inspect (Desk)
+        Scattered on the desks are stationery and:
+        * a wallet 
+        * a car key
+
+        #   > Inspect (Wallet)
+                The wallet contained little money, but you found an ID card and a keycard of some sort inside.
+
+                #   > Inspect (ID Card)
+                        It reads "George Weston"
+
+                    > Inspect (Keycard)
+                        It's a plain keycard, written on the back is "Smith &Co. Accounting"
+
+            > Inspect (Car Key)
+                A car key. It looks worn out. You can faintly read "Ford" engraved on the head.
+
+    > Inspect (Dresser)
+        It is a sturdy wooden dresser. There are four drawers on the dressers.
+
+    > Inpect (Note / Sticky Note)
+        You looked at the sticky note on the alarm. It reads, "Board of Directors Meeting @08:00"
+
+    > Look in (Dresser / Drawers)
+        You looked into the dresser. Inside the drawers, you found:
+         * some money
+         * clean clothes
+
+         #  > Take (Money)
+                You quickly grabbed the money hidden in one of the drawers.
+
+            > Take (Clean Clothes)
+                You changed your dirty clothes with a clean one.
+
+                #   > Stat
+                        Your clothes are slightly dirty and stained -> Your clothes are clean and tidy
+
+    > Look under (Bed)
+        You slowly bent down and saw the corpse of the man who lived in this house. His eyes were bloodied and looking disturbingly straight at you.
+
+        #   > Inspect (Corpse)
+                It's the body of a poor man you killed last night. You could clearly see that his throat had been cut open and a pool of blood had formed around the body. His shirt had been soaked in blood and there were dry blood stains all over him. You looked closer and found that he is wearing a gold ring and a seemingly expensive watch.
+
+                % Previously unavailable
+                #   > Take (Gold Ring)
+                    > Take (Expensive Watch)
+
+            > Strangle (Corpse)
+                You put your hands around the corpse's neck and strangled him one more time. You just had to make sure, right?
+
+    > Inspect (Dirty Clothes)
+        All sort of clothing could be found on this pile of clothes. Nothing interesting there.
+
+    > Take (Dirty Clothes)
+        You cared too little to bother yourself with that.
+
+____________
+|| BATHROOM
+    You stepped into the bathroom. You can hear the water slowly and rhythmically dripping from the faucet. The room is illuminated with a small lamp hanging off the ceiling. It's not much, but a bathroom is still a bathroom. There is a sink right next to the door, a toilet on one corner, and a shower on the other.
+
+    The bedroom is through the door to the East.
+
+    > Inspect (Sink)
+        The faucet is constantly letting out drops of water. You felt the urge to fix it after some while.
+
+    > Inspect (Toilet)
+        Yeah, it's a toilet alright.
+
+    > Inspect (Shower)
+        It's not what you can call clean. The floor is slippery due to lack of cleaning. At least there's no water dripping off the shower head.
+
+    > Use (Sink)
+        You quickly washed your face and felt refreshed.
+
+        #   > Use (Sink)
+                You have done that already.
+
+    > Use (Toilet)
+        Great idea. You quickly heeded the call of nature.
+
+        #   > Use (Toilet)
+                You have done that already.
+
+    > Use (Shower)
+        You should not carry anything while showering.
+
+    > Drop (Everything)
+        You dropped everything.
+
+        % Or use Drop (Object) one by one
+
+        #   > Use (Shower)
+                You took a cold and invigorating shower.
+
+                #   > Stat
+                        It is now <time>.
+                        You smell good.
+                        You are naked.
+                        You are hungry.
+
+                    > Take (Clothes)
+
+                        #   > Stat
+                                Your body emits a particular odor -> You smell good.
+
+_______________
+|| LIVING ROOM
+    You are in the living room. This is the main room of the house. The mixed design of contemporary and modern architecture had always fascinated you. In the morning, light would enter through the windows, and color the room with a warm hue. A comfy-looking sofa sits right in the center, near the coffee table. A cheap replica of the Mona Lisa hangs on one side of the wall.
+
+    There is a TV in the middle of the room.
+
+    The door on the North leads to the Bedroom. The Kitchen lies to the East through the archway.
+
+    ==============================================================================================================
+    % The line "There is a TV in the middle of the room will not be displayed if it has been taken by the player"
+    ==============================================================================================================
+
+    > Inspect (Painting)
+        You looked at the painting closely. It is a replica of Mona Lisa, well made but still a replica. But the painting seemed out of place; it doesn't match the modern vibe given off by this room in particular. Out of curiousity, you lifted the painting and discovered a hidden safe behind the painting. It requires a number combination.
+
+        #   > Inspect (Painting)
+                There is a hidden safe behind the painting.
+
+            > Inspect (Safe)
+                The safe is planted in the wall. It requires a number combination.
+
+            > Use (Safe)
+                You don't know the number combination.
+
+            % If the player has the paper containing a number sequence (obtained from flowerbed)
+
+            > Use (Safe)
+                You tried the number sequence written on the piece of paper. You heard a click from the safe and pulled the handle. Inside the safe, you found:
+                * gold bar
+                * money
+
+    > Inspect (TV)
+        The TV is not particularly large. It is just right for the size of this room. It's not the fancy TV that costs a fortune, but it's not exactly cheap either.
+
+    > Turn On (TV)
+        The TV has no buttons whatsoever in sight; you can't figure out how to turn it on.
+
+    > Turn Off (TV)
+        It is already off.
+
+    > Inspect (Sofa)
+        It is not the usual leather sofa. The sofa is covered in velvet, which means it doesn't produce the squishy sound that you hate.
+
+    > Inspect (Coffee Table)
+        A standard coffee table. It is too modern for your liking, but fits with the room well.
+
+    > Look Under (Coffee Table)
+        You found a remote for the TV.
+
+        #   > Take (Remote)
+                You have rescued the remote from under the coffee table
+
+                #   > Turn On (TV)
+                        You turned the TV on.
+
+                        #   > Turn Off (TV)
+                                You turned the TV off.
+
+    > Use (TV)
+        Watching the TV while standing is not a good idea.
+
+    > Use (Sofa)
+        You sat down on the sofa.
+
+        #   > <EVERY COMMAND> (except Look, Inventory, and Stat)
+                You have to get up first.
+
+            % If the TV is ON
+
+                #  > Use (TV)
+                        Some time passed while you were surfing the channel.
+
+                        OR (if the player hasn't picked up the remote)
+
+                    > Use (TV)
+                        You don't have the telekinetic power to possibly turn on the TV from here.
+
+            % If the TV is OFF
+
+                #   > Use (TV)
+                        The TV shows a solid black screen.
+
+            > Get Up
+                You pulled yourself together and managed to stand on your feet.
+
+                #   > Get Up
+                        You are already up
+
+    > Take (TV)
+        #   > Use / Turn On / Turn Off (TV)
+                There is no such thing here.
+
+___________
+|| KITCHEN
+    The kitchen is surprisingly clean considering the rest of the house. The sink is clogged up and collecting water and the noise of trickling water can be heard from the sink. There is a microwave on one of the counters, and a fridge sits on the end of them. There is a small window right above the stove on one side of the room. The kitchen is dimly lit with a light bulb, as small as the one in the bathroom.
+
+    An archway on the west leads to the Living room.
+
+    > Inspect (Sink)
+        The sink is filled with water, and it's not exactly clear water.
+
+    > Inspect (Microwave)
+        The microwave looked as if it had not been cleaned for a very long time.
+
+    > Inspect (Stove)
+        The stove had numerous colorful stains all over the top side.
+
+    > Inspect (Fridge)
+        It's a standard one-door fridge.
+
+    > Inspect (Window)
+        The view outside is blurred with the oil and stains stuck on the inner side of the window.
+
+    > Look Under (Sink)
+        Some water must have leaked out from the sink and wet the floor.
+
+    > Look Under (Stove)
+        You can't move the stove.
+
+    > Look Under (Fridge)
+        You can't move the fridge.
+
+    > Look Under (Window)
+        The stove lies right below the window.
+
+    > Use (Sink)
+        It's a bad idea to clog up the sink even more.
+
+    > Use (Microwave)
+        You don't have anything to be heated.
+
+    > Use (Stove)
+        You don't have anything to be heated.
+
+    > Use (Window)
+        You can't see anything but blurred images of the front yard and the occasional cars passing by.
+
+    > Look In (Fridge)
+        You opened the fridge. Inside, you saw:
+        * leftover
+        * soup
+
+        #   > Take (Leftover)
+            > Take (Soup)
+
+            #   > Use (Leftover)
+                    It's cold, and you hate cold meal.
+
+                > Use (Soup)
+                    It's cold, and you hate cold meal.
+
+                > Use (Microwave)
+                    % THERE ARE 3 POSSIBILITIES
+                    % 1. Leftover in Inventory
+                            You put the Leftover in the Microwave and heated it.
+
+                      2. Soup in Inventory
+                            You put the Soup in the Microwave and heated it.
+
+                      3. Both in Inventory
+                            You puth both the Leftover and the Soup in the Microwave and heated it.
+
+                    #   > Use (Leftover)
+                            You ate and filled your belly.
+
+                        > Use (Soup)
+                            You ate and filled your belly.
+
+                        #   > Stat
+                                You are hungry -> You are full.
+
+                > Use (Stove)
+                    You tried turning on the stove, but it won't turn on.
+
+
+______________
+|| Front Yard
+    You went outside and saw the grassy front yard. A lovely flowerbed grew along the front of the house. A car is parked right outside the house. There is a dog kennel on the front yard. The dog barks at you right as you stepped outside. The neighborhood is nice and calm. There is barely anyone around here, while only a few cars pass by occasionally.
+
+    > Inspect (Flowerbed)
+        It's full of white orchids. You caught the sweet scent of them when the wind blows. As you look closer, you saw a piece of paper stuck right in the middle of the flowerbed.
+
+        #   > Inspect (Paper)
+                It contains a sequence of numbers.
+
+            > Take (Paper)
+                You take the paper.
+
+    > Inspect (Car)
+        It's a '95 Ford Fiesta. The paint is a little worn out, or maybe it's because of dirt covering the car. It's not much, but it gets the work done.
+
+    > Inspect (Dog)
+        It's a German Shepherd. He's looking vicious, especially when he's growling and barking at you. Good thing he's chained to the dog kennel. You wondered if the chain could withstand the dog any longer.
+
+    > Talk (Dog)
+        The dog keeps barking at you. You tried to calm it down. As you walked closer, the dog suddenly jumped at you. Startled, you quickly jumped away, but not quick enough unfortunately. Your hand got bit and let out a little blood.
+
+        #   > Stat
+                + Your hand was bitten and still bled a bit from the bite mark.
+
+            > Talk (Dog)
+                The dog still snarled and barked at the sight of you. Looking at your hands, you decided to stay clear of the dog.
+
+    > Enter (Car)
+        You opened the car door and got in.
+
+_______
+|| Car
+    You are inside the car. The interior is not much to brag about. The car smelled of old leather and smoke. Numerous empty cigarette packs could be found on the dashboard, complete with a lighter. There are cabled dangling out of the dashboard. Apparently that's where the radio used to be.
+
+    > Use (Car Key) / Turn On (Car)
+        You pushed the car key in and turned it. The engine roared to life.
+
+        #   > Turn Off (Car)
+                You turned the car off.
+
+            > Drive
+                You pulled off the driveway and drove away. After a while, you came at an intersection. To the North lies the highway that leads out of town. The Smith & Co. building could be seen on the East. To go back to the house, you could turn around and went South.
+
+                #   > e
+                        You turned east to the Smith & Co. building. You found a free spot in the parking lot and parked the car.
+
+                        #   > Turn Off (Car)
+                                You turned the car off.
+
+                            #   > Exit (Car)
+                                    You opened the door and stepped outside. You walked through the building's entrance.
+
+                    > s
+                        You turned back around and headed back to the house. You stopped the car and slowly drove in the driveway. The dog kept looking at you as you did.
+
+                    #   > Turn Off (Car)
+                            You turned the car off.
+
+                            #   > Exit (Car)
+                                    You opened the door and stepped outside.
+
+                        > Exit (Car)
+                            It's a bad idea to leave the car while the engine is on.
+
+                    > n
+                        You drove past the intersection and went straight out of town.
+                        => Ending 1
+
+    > Turn Off (Car)
+        The car is already off.
+
+    > Drive (Car)
+        You have to turn it on first.        
+
+
+=======================
+| Smith & Co. Building
+
+_______________
+|| Ground Floor
+    You are inside the Smith & Co. Building The word Smith & Co. could be clearly seen written behind the reception. You could see the receptionist behind the counter. There's an elevator on the right side of the reception. A bench is sitting on one of the corner. There's nothing else in the reception room though, aside from the potted plant to somehow decorate the room.
+
+    The entrance lies to the south. You could go up to the office using the elevator.
+
+    > Inspect (Receptionist)
+        It's impolite to stare at someone.
+
+    > Inspect (Counter)
+        A wooden counter, it's the most organic thing you could see here, along with the plan.
+
+    > Inspect (Bench)
+        A metal bench, just like the ones you expected to find on hospitals and airports.
+
+    > Inspect (Plant)
+        It's a completely ordinary potted plant.
+
+    > Inspect (Elevator)
+        You need to insert a keycard to call the elevator.
+
+        % If player has keycard
+        #   > Use (Keycard)
+                You inserted the keycard and the elevator's door opened.
+
+            > Up
+                You went up in the elevator.
+
+    > Look Under (Counter)
+        You can't move the counter
+
+    > Look Under (Receptionist)
+        Pervert.
+
+    > Look Under (Long Chair)
+        Hey, you found a coin! It must be your lucky day.
+
+    > Look Under (Plant)
+        There's soil inside the pot, and also more soil outside the pot. Someone must have filled it carelessly.
+
+    > Talk (Receptionist)
+        You walked to the reception and stopped in front of the counter. You don't know what to say to the receptionist. The young woman looked at you, confused.
+
+        #   > Talk (Receptionist)
+                She pointed to the elevator and said, "Please use your keycard to use the elevator".
+
+    > Up
+        You need to use the keycard to call the elevator.
+
+    > s
+        You went outside the building to the parking lot and entered your car.
+
+        #   > Use (Car Key) / Turn On (Car)
+                You pushed the car key in and turned it. The engine roared to life.
+
+                #   > Turn Off (Car)
+                        You turned the car off.
+
+                        #   > Exit (Car)
+                                You opened the door and stepped outside.
+
+                    > Exit (Car)
+                        It's a bad idea to leave the car while the engine is on.
+
+                    > Drive (Car)
+                        You drove away from the Smith & Co. Building. You came at an intersection. The highway that leads out of town lies to the North. The house is South from the intersection. You could see the Smith & Co. Building in your rear view mirror, you could turn around and head East to go back there.
+
+                        #   > s
+                                You turned left and headed back to the house.
+
+                            > n
+                                You turned right and went straight out of town.
+
+                            > e
+                                You turned around and headed back to the Smith & Co. Building.
+
+            > Drive (Car)
+                You have to turn it on first.
+
+            > Exit (Car)
+                You opened the door and stepped outside.
+
+
+__________
+|| Office
+    You are in the office. You found a desk with the name "George Weston" on it. There's a photocopy machine right next to the water dispenser. A coffee maker sits on an endtable. You could clearly see and hear the sound of your co-workers barely working and chatting by themselves.
+
+    A glass door with the word "Director" imprinted lies on the east. A room labeled "Meeting Room" lies on the north. You could go back down to the ground floor through the elevator.
+
+    > Inspect (Desk)
+        It's a medium-sized wooden desk. There's a laptop on the desk, and lots of sticky notes scattered and stuck to documents.
+
+        #   > Inspect (Sticky Note)
+                There's a lot of crossed-out notes, and only one stood out. It reads "Get the Director's Signature". The note is stuck to a paper with an empty signature box on the bottom.
+
+            > Take (Document / Paper)
+                You took the paper.
+
+            > Take (Laptop)
+                You took the laptop.
+
+    > Inspect (Photocopy Machine)
+        It kept making that disturbing noise when someone uses it. It upsets you.
+
+    > Inspect (Water Dispenser)
+        It sits right in the center of a messy pile of used plastic cups.
+
+    > Inspect (Coffee Maker)
+        The coffee maker sat quietly on the endtable. It's strange that nobody seemed to use it.
+
+    > Inspect (Endtable)
+        It is as if its sole purpose in life is to support the coffee maker.
+
+    > Inspect (Co-Worker)
+        It's impolite to stare at people.
+
+    > Use (Desk)
+        The desk sits there quietly, awaiting your commands.
+
+    > Use (Photocopy Machine)
+        You don't need to copy anything right now.
+
+    > Use (Water Dispenser)
+        It's devoid of water.
+
+    > Use (Coffee Maker)
+        It's broken. No wonder it's ignored by everyone.
+
+    > Look In (Desk)
+        The drawers are locked.
+
+    > Look In (Endtable)
+        The drawers are locked.
+
+    > Look Under (Desk)
+        Someone should clean it.
+
+    > Look Under (Photocopy Machine)
+        You can't move the photocopy machine.
+
+    > Look Under (Water Dispenser)
+        You can't move the water dispenser.
+
+    > Look Under (Coffee Maker)
+        The endtable sits under the coffee maker.
+
+    > Look Under (Endtable)
+        Some of the plastic cups are scattered under the endtable.
+
+    > Talk (Co-Worker)
+        "You guys should have seen Dave here last night. He's so drunk that he went headfirst to the bathtub, thinking it was the bed." Laughter came from every individual in that group. When they finally noticed you, they had stopped laughing and focused on you.
+
+        #   > Talk (Co-Worker)
+                "Hey man, are you new? I had never seen you around here before." You could see the other co-workers whispering to each other.
+
+                #   > Talk (Co-Worker)
+                        One of the other co-worker finally spoke up, "Well, welcome to the office anyway. Some of us are new too - the director really likes to fire people. Don't let him catch you off guard." The sound of laughter roared yet again in the group.
+
+                    #   > Talk (Co-Worker)
+                            They continued to talk about the party last night. You started to regret about not going to the party.
+
+    > e
+        You went east
+
+    > n
+        The room is locked. Looks like you're already late.
+
+    > Down
+        You called the elevator and went down.
+
+___________________
+|| Director's Room
+    You are in the director's room. A big wooden desk lies in the center of the room. A plaque with "Director" written on it is sitting on the desk. There's a big window looking out right behind the desk.
+
+    There's a fairly old man in a suit searching through documents behind the desk.
+
+    The Office lies to the West.
+
+    > <Verb> <Anything>
+        "Hey, what are you doing in here?" the man asked you.
+
+    > <Verb> <Anything>
+        "Wait, who are you? I never saw you before" the man walked closer to you.
+
+    > <Verb> <Anything>
+        The man noticed the paper you're carrying "That's the one I was looking for." He grabbed it from your hands. "Weston's supposed to give this to me this morning, who are you?"
+
+    > <Verb> <Anything>
+        "I'm gonna call the security." The man reached for the phone
+
+    % CHANGE COULD BE MADE HERE
+
+    > <Verb> <Anything>
+        A short time later, the security came in and took you away.
+        => Ending 2a / 2b
+
+
+// ENDING 1
+    You had escaped from the town. Another successful day on the job. You have brought:
+        [ITEM_LIST]
+
+    As you drive, you hoped that the police would not know about the corpse for about three days. You would have been long gone after that.
+
+% IF PLAYER HAS ID CARD
+// ENDING 2a
+    You were brought to the police office. They found an ID card of George Weston with you and sent some officers to check the house. The police sweeped the house and found the body of George Weston under the bed. You were arrested as soon as they received the report. You would be facing a 10 year charge for first-degree murder.
+
+% IF PLAYER HAS NO ID CARD
+// ENDING 2b
+    You were brought to the police office. They could not find any sort of ID on you. You were jailed for about 4 hours before they finished the background check on you. The police discovered that you have no criminal record. They investigated where you got the keycard. You lied your that you found it on the reception and went exploring. They did not believe your words. They did a mental check and found that you are suffering from schizophrenia. They let you off with a warning and referred you to a mental hospital downtown.

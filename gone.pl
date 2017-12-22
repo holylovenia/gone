@@ -15,14 +15,14 @@
 
 start :-
 		init_dynamic_facts,
-        write('         _______                                      '), nl,
-        write('        /  _____\\                                     '), nl,
-        write('       /  //                                          '), nl,
-        write('       |  || ___  ______  ________  _______           '), nl,
-        write('       |  ||/__ \\/  __  \\/  ___  ||/ ____ ||          '), nl,
-        write('       |  ||  | || || | || ||  | || ______//          '), nl,
-        write('       |  \\\\__/ || ||_| || ||  | || \\_____    _       '), nl,
-        write('        \\_______/\\______/|_||  | ||\\______// /_/      '), nl, nl, nl,
+		write('         _______                                      '), nl,
+		write('        /  _____\\                                     '), nl,
+		write('       /  //                                          '), nl,
+		write('       |  || ___  ______  ________  _______           '), nl,
+		write('       |  ||/__ \\/  __  \\/  ___  ||/ ____ ||          '), nl,
+		write('       |  ||  | || || | || ||  | || ______//          '), nl,
+		write('       |  \\\\__/ || ||_| || ||  | || \\_____    _       '), nl,
+		write('        \\_______/\\______/|_||  | ||\\______// /_/      '), nl, nl, nl,
 		write('Your slumber is yet again disturbed by the obnoxiously'), nl,
 		write('loud alarm clock on the dresser across the room.'), nl, nl,
 		write('It was so loud this time that the urge to turn it off'), nl,
@@ -34,28 +34,30 @@ start :-
 		write('The alarm clock is still ringing, loudly.'), nl, nl,
 		write('Press "enter" key to continue'), nl,
 		get0(_),
-		write('"instructions" if you need help.'), nl,
-		look, plusoneminute(_,_), nl, !,
+		write('"instructions" if you need help.'), nl, nl,
+		look, nl, !,
 		command_loop.
 
 credits :- write('Holy(ry) Clinton Team'), nl, nl,
 		write('13515035 - Oktavianus Handika'), nl,
 		write('13515065 - Felix Limanta'), nl,
 		write('13515077 - Rionaldi Chandraseta'), nl,
-		write('13515113 - Holy Lovenia'), nl, nl,
-		write('13515143 - Agus Gunawan'), nl.
-		
+		write('13515113 - Holy Lovenia'), nl,
+		write('13515143 - Agus Gunawan'), nl, nl,
+		write('Yes, you''re also wasting your time by viewing this.'), nl,
+		plusoneminute(_,_), nl, !.
+
 
 command_loop:-
   repeat,
   catch((
-	 	write('> '),
-  		read(X),
-  		do(X),
-  		((lose, step(6)); win; X == quit)) ,
- 	 	error(syntax_error(_),_), 
-  		(write('Your input is invalid. "instructions" if you need help.'), 
-		nl, fail, !) ).
+		write('> '),
+		read(X),
+		do(X),
+		((lose, step(6)); win; X == quit)) ,
+		error(syntax_error(_),_), 
+		(write('Your input is invalid. "instructions" if you need help.'), 
+		nl, plusoneminute(_,_), nl, write('This also counts as wasting time.'), nl, fail, !) ).
 
 do(inspect(X)):- inspect(X),!.
 do(strangle(X)):- strangle(X),!.
@@ -82,19 +84,36 @@ do(save(X)) :- save(X),!.
 do(load(X)) :- loads(X), !.
 do(howmuch) :- howmuch, !.
 do(credits) :- credits, !.
+do(gone) :- gone, !.
 do(_) :- respond.
 
 win :- here('out of town'),
-  write('You had escaped from the town. Another successful day on the job.'),nl,nl,
+  write('You had escaped from the town. Alive, not well, but still breathing nevertheless.'),nl,nl,
   inventory,!,nl,
   write('Value of stolen goods: '), howmuch, nl,
-  write('As you drive, you hoped that the police would not know about the corpse for about three days. You would have been long gone after that..'), nl,
+  write('As you drive, you hoped that the police would not know about the corpse for another three days.'), nl,
+  write('You would have been long gone after that..'), nl,
   write('The End'), nl, abort.
 
 quit :-
-	write('You''ve quitted your game'),nl,abort,!.
+	write('You''ve quitted your game'),nl,
+	write('Wait, you just wasted one last minute.'), nl,
+	plusoneminute(_,_), nl, abort,!.
 
-respond :- write('"instructions" if you need help.'), nl,!,fail.
+gone :-
+	write('And I will do it for yooouuu, for yooouuu'), nl,
+	write('Baby I''m not moving on'), nl,
+	write('I''ll love you long after you''re gone'), nl,
+	write('For yooouuu, for yooouuu'), nl,
+	write('You will never sleep alone'), nl,
+	write('I''ll love you long after you go'), nl,
+	write('And long after you''re gone gone gone.'), nl, nl,
+	write('You were lost in your head singing the sound.'), nl,
+	plusPminute(_,_,60), nl, !.
+
+respond :- write('Type "instructions." if you need help.'), nl,
+		write('And yes, you are wasting your time'), nl, 
+		plusoneminute(_,_), nl, !,fail.
 
 /* Stat */
 stat :- attribute(X),
@@ -413,7 +432,7 @@ look :- here(Place), room(Place), Place == kitchen,
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 look :- here(Place), room(Place), Place == 'living room', nl,
 		write('LIVING ROOM'), nl,
@@ -432,7 +451,7 @@ look :- here(Place), room(Place), Place == 'living room', nl,
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 look :- here(Place), room(Place), Place == bathroom,
 		write('BATHROOM'), nl,
@@ -441,7 +460,7 @@ look :- here(Place), room(Place), Place == bathroom,
 		write('is illuminated with a small lamp hanging off the ceiling.'), nl,
 		write('It''s not much, but a bathroom is still a bathroom.'), nl,
 		write('There is a sink right next to the door, a toilet on one'), nl,
-		write('corner, and a shower on the other.'), nl,
+		write('corner, and a shower on the other.'), nl, nl,
 		list_directions(Place), nl,
 		write('Objects in the '), write(Place), write(':'), nl,
 		list_things(Place), nl,
@@ -450,14 +469,14 @@ look :- here(Place), room(Place), Place == bathroom,
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 look :- here(Place), room(Place), Place == bedroom,
 		write('BEDROOM'), nl,
 		write('This is the bedroom. Nobody would appreciate the absence of'), nl,
 		write('order in this room. A dresser is placed right across the'), nl,
 		write('bed, and a desk lies on one of the corner. The wooden floor'), nl,
-		write('goes well with the light color of the walls.'), nl,
+		write('goes well with the light color of the walls.'), nl, nl,
 		list_directions(Place), nl,
 		write('Objects in the '), write(Place), write(':'), nl,
 		list_things(Place), nl,
@@ -466,7 +485,7 @@ look :- here(Place), room(Place), Place == bedroom,
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 look :- here(Place), room(Place), Place == 'front yard',
 		write('FRONT YARD'), nl,
@@ -475,7 +494,7 @@ look :- here(Place), room(Place), Place == 'front yard',
 		write('right outside the house. There is a dog kennel on the front'), nl,
 		write('yard. The dog barks at you right as you stepped outside. The'), nl,
 		write('neighborhood is nice and calm. There is barely anyone around'), nl,
-		write('here, while only a few cars pass by occasionally.'), nl,
+		write('here, while only a few cars pass by occasionally.'), nl, nl,
 		list_directions(Place), nl,
 		write('Objects in the '), write(Place), write(':'), nl,
 		list_things(Place), nl,
@@ -484,7 +503,7 @@ look :- here(Place), room(Place), Place == 'front yard',
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 look :- here(Place), room(Place), Place == intersection,
 		write('INTERSECTION'), nl,
@@ -492,7 +511,7 @@ look :- here(Place), room(Place), Place == intersection,
 		write('you came at an intersection. To the North lies the highway '), nl,
 		write('that leads out of town. The Smith & Co. building could be '), nl,
 		write('seen on the East. To go back to the house, you could turn'), nl,
-		write('around and went South.'), nl,
+		write('and went South.'), nl, nl,
 		list_directions(Place), nl,
 		write('Objects in the '), write(Place), write(':'), nl,
 		list_things(Place), nl,
@@ -501,7 +520,7 @@ look :- here(Place), room(Place), Place == intersection,
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 look :- here(Place), room(Place), Place == reception,
 		write('RECEPTION'), nl,
@@ -511,7 +530,7 @@ look :- here(Place), room(Place), Place == reception,
 		write('elevator on the right side of the reception. A bench is'), nl,
 		write('sitting on one of the corner. There''s nothing else in the'), nl,
 		write('reception room though, aside from the potted plant to'), nl,
-		write('somehow decorate the room.'), nl,
+		write('somehow decorate the room.'), nl, nl,
 		list_directions(Place), nl,
 		write('Objects in the '), write(Place), write(':'), nl,
 		list_things(Place), nl,
@@ -520,7 +539,7 @@ look :- here(Place), room(Place), Place == reception,
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 look :- here(Place), room(Place), Place == office,
 		write('OFFICE'), nl, 
@@ -528,7 +547,7 @@ look :- here(Place), room(Place), Place == office,
 		write('"George Weston" on it. There''s a photocopy machine right'), nl,
 		write('next to the water dispenser. A coffee maker and laptop sits'), nl,
 		write('on an endtable. You could clearly see and hear the sound of'), nl,
-		write('your co-workers barely working and chatting by themselves.'), nl,
+		write('your co-workers barely working and chatting by themselves.'), nl, nl,
 		list_directions(Place), nl,
 		write('Objects in the '), write(Place), write(':'), nl,
 		list_things(Place), nl,
@@ -537,14 +556,14 @@ look :- here(Place), room(Place), Place == office,
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 look :- here(Place), room(Place), Place == 'director''s cabin',
 		write('DIRECTOR''S ROOM'), nl,
 		write('You are in the director''s room. A big wooden desk lies'), nl,
 		write('in the center of the room. A plaque with "Director" written'), nl,
 		write('on it is sitting on the desk. There''s a big window looking'), nl,
-		write('out right behind the desk.'), nl,
+		write('out right behind the desk.'), nl, nl,
 		list_directions(Place), nl,
 		write('Objects in the Director''s Room'), write(':'), nl,
 		list_things(Place), nl,
@@ -553,7 +572,7 @@ look :- here(Place), room(Place), Place == 'director''s cabin',
 		write('Places to drive to:'), nl,
 		list_way(Place), nl,
 		write('Places to walk to:'), nl,
-		list_connections(Place), !.
+		list_connections(Place), plusoneminute(_,_), nl, !.
 
 /* Check */
 
@@ -612,7 +631,7 @@ check(Thing) :- Thing == desk, here(Place), location(Thing, Place),
 				write('You can see:'), nl,
 				list_things(Thing), assertz(here(Thing)), plusoneminute(_,_), nl, !.
 
-check(_) :- write('There''s nothing interesting there...'), nl, plusoneminute(_,_), nl.
+check(_) :- write('Nothing interesting there...'), nl, plusoneminute(_,_), nl.
 
 
 /* Inspect */
@@ -622,11 +641,6 @@ check(_) :- write('There''s nothing interesting there...'), nl, plusoneminute(_,
 inspect(Thing) :- Thing == alarm, here(Place), location(Thing, Place),
 				write('You walked closer to the source of the sound.'), nl,
 				write('You saw a sticky note stuck on the alarm.'), nl,
-				assertz(here(Thing)), plusoneminute(_,_), nl, !.
-
-inspect(Thing) :- Thing == knife, here(Place), location(Thing, Place),
-				write('The knife has dried blood all over it, someone'), nl,
-				write('should really clean it.'), nl,
 				assertz(here(Thing)), plusoneminute(_,_), nl, !.
 
 inspect(Thing) :- Thing == drawer, here(Place), location(Thing, Place),
@@ -775,6 +789,16 @@ inspect(Thing) :- Thing == stove, here(Place), location(Thing, Place),
 				write('The stove had numerous colorful stains all over the top side.'), nl,
 				assertz(here(Thing)), plusoneminute(_,_), nl, !.
 
+inspect(Thing) :- Thing == knife, here(Place), location(Thing, Place),
+				write('The knife has dried blood all over it, someone'), nl,
+				write('should really clean it.'), nl,
+				assertz(here(Thing)), plusoneminute(_,_), nl, !.
+
+inspect(Thing) :- Thing == 'dog food', here(Place), location(Thing, Place),
+				write('It''s one of the brands you would see in'), nl,
+				write('TV commercials. Fancy.'), nl,
+				assertz(here(Thing)), plusoneminute(_,_), nl, !.
+
 inspect(Thing) :- Thing == window, here(Place), location(Thing, Place),
 				write('The view outside is blurred with the oil and '),nl,
 				write('stains stuck on the inner side of the window.'), nl,
@@ -786,12 +810,27 @@ inspect(Thing) :- Thing == sofa, here(Place), location(Thing, Place),
 				assertz(here(Thing)), plusoneminute(_,_), nl, !.
 
 inspect(Thing) :- Thing == note, here(Place), location(Thing, Place),
-				write('You looked at the sticky note on the alarm. It reads, '),nl,
+				write('You looked at the sticky note. It reads, '),nl,
 				write('"Board of Directors Meeting @08:00"'),nl,
 				assertz(here(Thing)), plusoneminute(_,_), nl, !.
 
-inspect(Thing) :- write('It''s a completely ordinary '), write(Thing), write('. '), nl,
-				write('You''re wasting your time by inspecting it.'), plusoneminute(_,_), nl, !.
+inspect(Animal) :- Animal == dog, here(Place), location(Thing, Place),
+				write('It''s a German Shepherd. He''s looking vicious, especially when'),nl,
+				write('he''s growling at you. Good thing he''s chained to a pole.'),nl,
+				write('You wondered if the chain could hold him any longer.'), nl,
+				assertz(here(Thing)), plusoneminute(_,_), nl, !.
+
+inspect(Person) :- Person == receptionist, here(Place), location(Thing, Place),
+				write('It''s impolite to stare at someone'),nl,
+				assertz(here(Thing)), plusoneminute(_,_), nl, !.
+
+inspect(Person) :- Person == 'co-workers', here(Place), location(Thing, Place),
+				write('They''re chatting with occasional laughter in-between.'),nl,
+				assertz(here(Thing)), plusoneminute(_,_), nl, !.				
+
+inspect(Thing) :- write('There''s no such thing as '), write(Thing), write(' here.'), nl,
+				write('Well, nothing that you can interact with anyway.'), nl,
+				write('You''re wasting your time.'), plusoneminute(_,_), nl, !.
 
 
 /* Use something */
@@ -889,9 +928,7 @@ can_take(Thing) :- here(Place), location(Thing, Place), object(Thing,small,_), !
 can_take(Thing) :- here(Place), location(Thing, Place), object(Thing,large,_),
 							write('The '), write(Thing), write(' is too large to take.'), nl, plusoneminute(_,_), nl,  !, fail.
 
-can_take(Thing) :- here(Place), \+(location(Thing,Place)),
-							write('There''s no '), write(Thing), write(' to take here.'), nl, plusoneminute(_,_), nl, !, fail.
-can_take(_) :- !.
+can_take(Thing) :- write('There''s no such thing as '), write(Thing), write('. '), nl, write('Well, nothing that you can interact with anyway.'), nl, plusoneminute(_,_), nl, !, fail.
 
 
 take_object(X) :- retract(location(X, _)), assertz(have(X)),
@@ -905,7 +942,7 @@ take(_).
 
 :- op(35,fx,drop).
 
-can_drop(clothes) :- \+(here(bathroom)), write('You can''t take of your clothes unless you''re in the bathroom.'), nl, plusoneminute(_,_), nl, !, fail;true.
+can_drop(clothes) :- \+(here(bathroom)), write('You can''t take off your clothes unless you''re in the bathroom.'), nl, plusoneminute(_,_), nl, !, fail;true.
 
 can_drop(Thing) :- have(Thing), !.
 
@@ -962,20 +999,20 @@ instructions :-
 	tab(2), write('look.                        look around'), nl,
 	tab(2), write('stat.                        to see player''s attribute'), nl,
 	tab(2), write('inventory.                   check your belongings'), nl,
-	tab(2), write('save name.                   to save your progress with name "name"'), nl,
-	tab(2), write('load name.                   to load your progress with name "name"'), nl,
-	tab(2), write('inspect something.           ex: inspect soup'), nl,
-	tab(2), write('check something.             ex: check bed'), nl,
-	tab(2), write('take something.              ex: take gold'), nl,
-	tab(2), write('drop something.              ex: drop clothes'), nl,
-	tab(2), write('drive somewhere.             ex: drive intersection'), nl,
-	tab(2), write('strangle someone.            sstt, be careful!'), nl,
-	tab(2), write('eat something.               ex: eat soup'), nl,
-	tab(2), write('talk someone.                ex: talk dog'), nl,
+	tab(2), write('save <name>.                 to save your progress with name "name"'), nl,
+	tab(2), write('load <name>.                 to load your progress with name "name"'), nl,
+	tab(2), write('inspect <something>.         ex: inspect soup'), nl,
+	tab(2), write('check <something>.           ex: check bed'), nl,
+	tab(2), write('take <something>.            ex: take gold'), nl,
+	tab(2), write('drop <something>.            ex: drop clothes'), nl,
+	tab(2), write('drive <somewhere>.           ex: drive intersection'), nl,
+	tab(2), write('strangle <someone>.          sstt, be careful!'), nl,
+	tab(2), write('eat <something>.             ex: eat soup'), nl,
+	tab(2), write('talk <someone>.              ex: talk dog'), nl,
 	tab(2), write('credits.                     show the credits'), nl,
-	tab(2), write('quit.                        exit from game'), nl,
+	tab(2), write('quit.                        exit from game'), nl, nl,
 	write('Use '' '' if you use more than 1 word, ex: take ''dog food''.'), nl,
-	write('Press "enter" key to continue'), nl,
+	write('Press "enter" to continue'), nl,
 	get0(_),
 	look.
 
@@ -987,6 +1024,8 @@ instructions :-
 strangle(X) :- X == corpse, here(Place), location(X, Place), write('You put your hands around the '), write(X), write('''s neck and strangled him one more time. You just had to make sure, right?'), nl, plusoneminute(_,_), nl, !.
 
 strangle(X) :- X == 'co-workers', here(Place), location(X, Place), losestrangle, !.
+
+strangle(X) :- X == receptionist, here(Place), location(X,Place), losestranglerec, !.
 
 strangle(X) :- X \== corpse, write('You cannot strangle '), write(X), nl, plusoneminute(_,_), nl, !.
 
@@ -1005,21 +1044,20 @@ lose :- step(X), X == 4,
 lose :- step(X), X == 5,
 	write('A short time later, the security came in and took you away.'), nl, plusonestep(X,Y), retract(step(X)), assertz(step(Y)), write('> '), read(Z), do(Z), !, lose.
 lose :- step(X), X == 6, have(card),
-  	write('You were brought to the police office. They found an ID card of George '),nl,
-  	write('Weston with you and sent some officers to check the house. The police '),nl,
-  	write('swept the house and found the body of George Weston under the bed. '),nl,
-  	write('You were arrested as soon as they received the report.'),nl,
-  	write('You would be facing a 20 year charge for first-degree murder.'),nl,abort.
+	write('You were brought to the police office. They found an ID card of George '),nl,
+	write('Weston with you and sent some officers to check the house. The police '),nl,
+	write('swept the house and found the body of George Weston under the bed.'),nl,
+	write('You were arrested as soon as they received the report.'),nl,
+	write('You would be facing a 20 year charge for first-degree murder.'),nl,abort.
 
 lose :- step(X), X == 6, \+(have(card)),
   write('You were brought to the police office. They could not find any sort '),nl,
-  write('of ID on you. You were jailed for about 4 hours before they finished '),nl,
-  write('the background check on you. The police discovered that you have no '),nl,
-  write('criminal record. They investigated where you got the keycard. You lied '),nl,
-  write('your that you found it on the reception and went exploring. '),nl,
-  write('They did not believe your words. They did a mental check and found '),nl,
-  write('that you are suffering from schizophrenia. They let you off with a '),nl,
-  write('warning and referred you to a mental hospital downtown.'),nl,abort.
+  write('of ID on you. You were recognized as the man who escaped from the mental '),nl,
+  write('hospital. You were put back in the hospital you had escaped from.'),nl, nl,
+  write('After a week in the hospital, the police came and arrested you for'),nl,
+  write('the murder of George Weston. The man had been missing for a week and'),nl,
+  write('found dead under the bed in his house. They found traces of your'),nl,
+  write('fingerprints around the house, and charged you 25 years in prison.'),nl,abort.
 
 
 lose :- atime(H,_), H >= 14, here(P), house(L), memberchk(P,L),
@@ -1054,7 +1092,7 @@ lose :- atime(H,_), H >= 14, here(intersection),
 lose :- attribute(dead), here('front yard'),
 		write('You walked closer to the dog, stretching out your bleeding hand to try and pet'), nl,
 		write('the furry beast. The dog growled as you got closer, baring his teeth at you.'), nl,
-		write('When it finally leapt forward, it was already too late. The sharp teeth found'), nl,
+		write('The chain on his collar broke, and you''re late to notice it. The sharp teeth found'), nl,
 		write('their way to your face and that''s the last thing you see.'), nl, nl,		
 		write('Your obsession to talk with the dog, for whatever reason, has finally led'), nl,
 		write('to the untimely and grisly demise of your life.'), nl, abort.
@@ -1073,13 +1111,24 @@ losestrangle :-
 		write('just froze and watched the two of you. When the man finally turned blue, one of'), nl,
 		write('them grabbed a monitor and, before you know it, smashed the monitor against'), nl, 
 		write('your head. When you came to, you had been arrested by the police. You have been'), nl, 
-		write('charged with attempted murder of the man you strangled. You are now facing 10 years'), nl,
+		write('charged with attempted murder of the man you strangled. You are now facing 5 years'), nl,
 		write('of prison.'), nl, nl, 
 		write('After a week in prison, you have been charged again with the murder of George Weston.'), nl, 
 		write('The police raided his house and found his body under the bed. They found your fingerprints'), nl,
-		write('on his body and around the house. You would be jailed for a total of 30 years'), nl,
+		write('on his body and around the house. You would be jailed for a total of 25 years'), nl,
 		write('for both charges.'), nl, abort.
 
+losestranglerec :-
+		write('You walked behind the counter and quickly grabbed the poor woman''s neck. Someone'), nl,
+		write('who walked by and saw you strangling the receptionist quickly reached for his phone'), nl,
+		write('and called the police. Nobody dared to help the woman, who was turning blue and making'), nl,
+		write('disturbing, choking noise. By the time the police came, you were still holding the body'), nl,
+		write('of the lifeless receptionist. The police quickly took you in custody and charged you'), nl,
+		write('with 20 years in prison for homicide.'), nl, nl,
+		write('After a week in prison, you have been charged again with the murder of George Weston.'), nl, 
+		write('The police raided his house and found his body under the bed. They found your fingerprints'), nl,
+		write('on his body and around the house. You would be jailed for a total of 50 years'), nl,
+		write('for multiple homicides.'), nl, abort.
 
 /* NPC */
 
@@ -1092,11 +1141,11 @@ talk(Person) :- Person == receptionist, npc(Person), \+(have(card)),
 				write('You walked to the reception and stopped in front of'), nl,
 				write('the counter. You don''t know what to say to the'), nl,
 				write('receptionist. The young woman looked at you,'), nl,
-				write('confused. "I don''t know you," she said.'), nl, plusoneminute(_,_), nl, !.
+				write('confused. "Sorry sir, I did not see your ID Card.'), nl, plusoneminute(_,_), nl, !.
 talk(Person) :- Person == receptionist, npc(Person), have(card),
 				here(Place), location(Person, Place),
-				write('"Err, Mr Weston, the director''s been looking for'), nl,
-				write('you. You should go to his room.'), nl, plusoneminute(_,_), nl, !.
+				write('"Mr Weston, the director had been looking for'), nl,
+				write('you all morning. You should go to his room.'), nl, plusoneminute(_,_), nl, !.
 
 talk(Person) :- Person == 'co-workers', npc(Person), stept(X), X == 1, plusonestep(X,Y), retract(stept(X)), assertz(stept(Y)),
 				here(Place), location(Person, Place),
@@ -1129,13 +1178,21 @@ talk(Animal) :- Animal == dog, npc(Animal), \+(have('dog food')), attribute(unin
 				write('down. As you walked closer, the dog suddenly leapt'), nl,
 				write('at you. Startled, you quickly jumped away, but'), nl,
 				write('not quick enough unfortunately. Your hand got bitten'), nl,
-				write('and let out a trickle of blood.'), nl, plusoneminute(_,_),
+				write('and let out a trickle of blood.'), nl, 
+				write('Good thing the chain could still hold the dog away from you.'), nl, plusoneminute(_,_),
 				retract(attribute(uninjured)), asserta(attribute(bitten)), nl, !.
 talk(Animal) :- Animal == dog, npc(Animal), have('dog food'),
 				here(Place), location(Animal, Place),
-				write('The dog ate its food calmly.'), nl,
-				retract(have('dog food')), plusoneminute(_,_), nl, !.
+				write('The dog wagged its tail at the sight of the dog food.'), nl,
+				write('You gave the dog a little bit of the food in the box.'), nl,
+				write('The dog quickly finished the meal and looked at you.'), nl,
+				write('It had gone full puppy eyes mode. You could not resist'), nl,
+				write('and kept feeding him. You spent quite some time and'), nl,
+				write('before you know it, the box was already empty'), nl,
+				retract(have('dog food')), plusPminute(_,_,10), nl, !.
 
+talk(_) :- write('Nothing to talk to, you wouldn''t want people'), nl, 
+		write('to think that you''re mentally ill, would you?'), nl, plusoneminute(_,_), nl.
 
 /* Save Load */
 listpret([],_).
@@ -1143,53 +1200,53 @@ listpret([X|T],Eks) :-
   write(Eks,X), nl(Eks), listpret(T,Eks).
 
 save_inventory(X,Eks) :- findall(X,have(X),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_cold(X,Eks) :- findall(X,cold(X),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_warm(X,Eks) :- findall(X,warm(X),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_attribute(X,Eks) :- findall(X,attribute(X),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_bedroom(X,Eks) :- findall(X,location(X,bedroom),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_frontyard(X,Eks) :- findall(X,location(X,'front yard'),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_livingroom(X,Eks) :- findall(X,location(X,'living room'),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_kitchen(X,Eks) :- findall(X,location(X,kitchen),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_bathroom(X,Eks) :- findall(X,location(X,bathroom),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_directorscab(X,Eks) :- findall(X,location(X,'director''s cabin'),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_office(X,Eks) :- findall(X,location(X,office),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_reception(X,Eks) :- findall(X,location(X,reception),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_car(X,Eks) :- findall(X,location(X,car),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_drawer(X,Eks) :- findall(X,location(X,drawer),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_painting(X,Eks) :- findall(X,location(X,painting),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_safe(X,Eks) :- findall(X,location(X,safe),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_fridge(X,Eks) :- findall(X,location(X,fridge),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_corpse(X,Eks) :- findall(X,location(X,corpse),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 save_corpse(X,Eks) :- findall(X,location(X,corpse),Y), length(Y,B), write(Eks,B), nl(Eks),
-                          (B > 0) -> listpret(Y,Eks); true.
+						  (B > 0) -> listpret(Y,Eks); true.
 
 :- op(35,fx,save).
 
 save(FILE) :-
   open(FILE,write,ID),
-    (
-    (
-      atime(HR,MN), write(ID,HR), nl(ID), write(ID,MN), nl(ID),
-      here(Position), write(ID,Position), nl(ID),
-      save_inventory(_,ID),
+	(
+	(
+	  atime(HR,MN), write(ID,HR), nl(ID), write(ID,MN), nl(ID),
+	  here(Position), write(ID,Position), nl(ID),
+	  save_inventory(_,ID),
 			save_cold(_,ID),
 			save_warm(_,ID),
 			save_attribute(_,ID),
@@ -1208,10 +1265,12 @@ save(FILE) :-
 			save_fridge(FThing,ID),
 			save_corpse(_,ID),
 			money(Money), write(ID,Money), nl(ID),
-			write('Game has been saved'),nl
+			write('Game has been saved'),nl,
+			plusoneminute(_,_), nl, 
+			write('Oh, we did charge you one minute for saving the game'), nl
 		)
-    , close(ID)
-    ).
+	, close(ID)
+	).
 load_inventory(Eks,N) :- for(_,1,N), readWord(Eks,Thing), asserta(have(Thing)), fail ; true.
 load_cold(Eks,N) :- for(_,1,N), readWord(Eks,Thing), asserta(cold(Thing)), fail ; true.
 load_warm(Eks,N) :- for(_,1,N), readWord(Eks,Thing), asserta(warm(Thing)), fail ; true.
